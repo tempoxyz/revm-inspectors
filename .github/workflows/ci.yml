@@ -29,10 +29,10 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
-      - uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772
+      - uses: tempoxyz/gh-actions/vendor/dtolnay/rust-toolchain@487be2d19b0ba9ae1903143016444ab752c3e939
         with:
           toolchain: ${{ matrix.rust }}
-      - uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
+      - uses: tempoxyz/gh-actions/vendor/Swatinem/rust-cache@487be2d19b0ba9ae1903143016444ab752c3e939
         with:
           cache-on-failure: true
       # Only run tests on latest stable and above
@@ -50,11 +50,11 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
-      - uses: dtolnay/rust-toolchain@4360b52568e2003a75bf9bc1d59f33a8e3fc893c
-      - uses: taiki-e/install-action@eea29cff9a2b68892c0845ae3e4f45fc47ee9354 # v2.75.13
+      - uses: tempoxyz/gh-actions/vendor/dtolnay/rust-toolchain@487be2d19b0ba9ae1903143016444ab752c3e939
+      - uses: tempoxyz/gh-actions/vendor/taiki-e/install-action@487be2d19b0ba9ae1903143016444ab752c3e939
         with:
           tool: cargo-hack
-      - uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
+      - uses: tempoxyz/gh-actions/vendor/Swatinem/rust-cache@487be2d19b0ba9ae1903143016444ab752c3e939
         with:
           cache-on-failure: true
       - name: cargo hack
@@ -67,8 +67,11 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
-      - uses: dtolnay/rust-toolchain@ef575f3cf1b0268593c26ad38174b9d0d7f50b9c
-      - uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
+      - uses: tempoxyz/gh-actions/vendor/dtolnay/rust-toolchain@487be2d19b0ba9ae1903143016444ab752c3e939
+        with:
+          toolchain: nightly
+          components: clippy
+      - uses: tempoxyz/gh-actions/vendor/Swatinem/rust-cache@487be2d19b0ba9ae1903143016444ab752c3e939
         with:
           cache-on-failure: true
       - run: cargo clippy --workspace --all-targets --all-features
@@ -82,8 +85,10 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
-      - uses: dtolnay/rust-toolchain@7c8d7d138f5c09cef361f8214cf96882cd029cdb
-      - uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
+      - uses: tempoxyz/gh-actions/vendor/dtolnay/rust-toolchain@487be2d19b0ba9ae1903143016444ab752c3e939
+        with:
+          toolchain: nightly
+      - uses: tempoxyz/gh-actions/vendor/Swatinem/rust-cache@487be2d19b0ba9ae1903143016444ab752c3e939
         with:
           cache-on-failure: true
       - run: cargo doc --workspace --all-features --no-deps --document-private-items
@@ -100,8 +105,9 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
-      - uses: dtolnay/rust-toolchain@7c8d7d138f5c09cef361f8214cf96882cd029cdb
+      - uses: tempoxyz/gh-actions/vendor/dtolnay/rust-toolchain@487be2d19b0ba9ae1903143016444ab752c3e939
         with:
+          toolchain: nightly
           components: rustfmt
       - run: cargo fmt --all --check
 
@@ -118,6 +124,6 @@ jobs:
       - deny
     steps:
       - name: Decide whether the needed jobs succeeded or failed
-        uses: re-actors/alls-green@05ac9388f0aebcb5727afa17fcccfecd6f8ec5fe # release/v1
+        uses: tempoxyz/gh-actions/actions/check-needs@487be2d19b0ba9ae1903143016444ab752c3e939
         with:
           jobs: ${{ toJSON(needs) }}
